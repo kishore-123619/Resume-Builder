@@ -8,7 +8,7 @@ import {
   sendResetOtp,
   verifyOtp,
   resetPassword,
-} from "../controllers/userController.js";
+} from "../controller/userController.js";
 
 import protect from "../middlewares/authMiddleware.js";
 
