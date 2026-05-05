@@ -9,12 +9,11 @@ const Hero = () => {
     const [menuOpen, setMenuOpen] = React.useState(false);
 
     const logos = [
-        'https://saasly.prebuiltui.com/assets/companies-logo/instagram.svg',
-        'https://saasly.prebuiltui.com/assets/companies-logo/framer.svg',
-        'https://saasly.prebuiltui.com/assets/companies-logo/microsoft.svg',
-        'https://saasly.prebuiltui.com/assets/companies-logo/huawei.svg',
-        'https://saasly.prebuiltui.com/assets/companies-logo/walmart.svg',
-    ]
+      "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=200",
+      "https://images.unsplash.com/photo-1736220690062-79e12ca75262?q=80&w=800&h=400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200",
+      "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&auto=format&fit=crop&q=60",
+    ];
 
   return (
     <>
@@ -110,7 +109,7 @@ const Hero = () => {
             <p className="py-6 text-slate-600 mt-14">Trusting by leading brands, including</p>
 
             <div className="flex flex-wrap justify-between max-sm:justify-center gap-6 max-w-3xl w-full mx-auto py-4" id="logo-container">
-                {logos.map((logo, index) => <img key={index} src={logo} alt="logo" className="h-6 w-auto max-w-xs" />)}
+                {logos.map((logo, index) => <img key={index} src={logo} alt="logo" className="h-30 w-auto object-contain" />)}
             </div>
         </div>
     </div>

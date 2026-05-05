@@ -1,5 +1,5 @@
 import { Lock, Mail, User2Icon } from "lucide-react";
-import React from "react";
+import React, { useMemo } from "react";
 import api from "../configs/api";
 import { useDispatch } from "react-redux";
 import { login } from "../app/features/authSlice";
@@ -24,7 +24,6 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // extra validation for register
     if (state === "register" && !formData.name) {
       return toast.error("Name is required");
     }
@@ -32,7 +31,6 @@ const Login = () => {
     try {
       const { data } = await api.post(`/api/users/${state}`, formData);
 
-      // Only login automatically if token exists
       if (data.token) {
         dispatch(login(data));
         localStorage.setItem("token", data.token);
@@ -40,7 +38,6 @@ const Login = () => {
 
       toast.success(data.message);
 
-      // after register → go to login
       if (state === "register") {
         setState("login");
       }
@@ -68,6 +65,18 @@ const Login = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  // ✅ FIX: Prevent multiple Google initialization
+  const googleButton = useMemo(
+    () => (
+      <GoogleLogin
+        onSuccess={handleGoogleLogin}
+        onError={() => toast.error("Google login failed")}
+        width="300"
+      />
+    ),
+    [],
+  );
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -144,15 +153,9 @@ const Login = () => {
           {state === "login" ? "Login" : "Sign up"}
         </button>
 
-        {/* Google login only on login */}
+        {/* Google login */}
         {state === "login" && (
-          <div className="mt-4 flex justify-center">
-            <GoogleLogin
-              onSuccess={handleGoogleLogin}
-              onError={() => toast.error("Google login failed")}
-              width="300"
-            />
-          </div>
+          <div className="mt-4 flex justify-center">{googleButton}</div>
         )}
 
         <p
