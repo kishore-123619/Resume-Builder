@@ -13,8 +13,18 @@ const connectDB = async () => {
       throw new Error("MONGODB_URI environment variable not set");
     }
 
+    mongodbURI = mongodbURI.trim();
     if (mongodbURI.endsWith("/")) {
       mongodbURI = mongodbURI.slice(0, -1);
+    }
+
+    if (
+      !mongodbURI.startsWith("mongodb://") &&
+      !mongodbURI.startsWith("mongodb+srv://")
+    ) {
+      throw new Error(
+        "MONGODB_URI must start with mongodb:// or mongodb+srv://",
+      );
     }
 
     await mongoose.connect(mongodbURI, { dbName: projectName });
