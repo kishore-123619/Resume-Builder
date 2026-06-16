@@ -20,7 +20,6 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
-app.options("/*", cors());
 
 app.get("/", (req, res) => res.send("Server is live..."));
 

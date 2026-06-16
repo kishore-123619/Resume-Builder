@@ -14,6 +14,13 @@ const connectDB = async () => {
     }
 
     mongodbURI = mongodbURI.trim();
+    if (
+      (mongodbURI.startsWith('"') && mongodbURI.endsWith('"')) ||
+      (mongodbURI.startsWith("'") && mongodbURI.endsWith("'"))
+    ) {
+      mongodbURI = mongodbURI.slice(1, -1).trim();
+    }
+
     if (mongodbURI.endsWith("/")) {
       mongodbURI = mongodbURI.slice(0, -1);
     }
