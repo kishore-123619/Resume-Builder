@@ -36,6 +36,7 @@ const Login = () => {
         if (data.token) {
           dispatch(login(data));
           localStorage.setItem("token", data.token);
+          navigate("/app");
         }
       }
 
@@ -60,6 +61,7 @@ const Login = () => {
 
       dispatch(login(data));
       localStorage.setItem("token", data.token);
+      navigate("/app");
       toast.success("Logged in with Google");
     } catch (error) {
       toast.error(error?.response?.data?.message || error.message);

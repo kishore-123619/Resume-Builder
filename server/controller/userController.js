@@ -21,14 +21,16 @@ export const registerUser = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    const exists = await User.findOne({ email });
+    const normalizedEmail = email.toLowerCase().trim();
+
+    const exists = await User.findOne({ email: normalizedEmail });
     if (exists) {
       return res.status(400).json({ message: "User already exists" });
     }
 
     const user = await User.create({
       name,
-      email,
+      email: normalizedEmail,
       password,
       mobile,
     });
@@ -50,8 +52,9 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+    const normalizedEmail = email.toLowerCase().trim();
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: normalizedEmail });
     if (!user || !(await user.comparePassword(password))) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
