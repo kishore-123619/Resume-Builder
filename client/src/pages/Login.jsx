@@ -34,7 +34,7 @@ const Login = () => {
 
       if (state === "login") {
         if (data.token) {
-          dispatch(login(data));
+          dispatch(login({ token: data.token, user: data.user }));
           localStorage.setItem("token", data.token);
           navigate("/app");
         }
