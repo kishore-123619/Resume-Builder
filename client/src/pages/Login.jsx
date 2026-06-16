@@ -30,18 +30,21 @@ const Login = () => {
     }
 
     try {
-      console.log(formData);
       const { data } = await api.post(`/api/users/${state}`, formData);
 
-      if (data.token) {
-        dispatch(login(data));
-        localStorage.setItem("token", data.token);
+      if (state === "login") {
+        if (data.token) {
+          dispatch(login(data));
+          localStorage.setItem("token", data.token);
+        }
       }
 
       toast.success(data.message);
 
       if (state === "register") {
+        setFormData({ name: "", email: "", password: "", mobile: "" });
         setState("login");
+        navigate("/login");
       }
     } catch (error) {
       console.error(error);
@@ -135,17 +138,19 @@ const Login = () => {
           />
         </div>
         {/* Mobile Number */}
-        <div className="flex items-center mt-4 w-full bg-white border border-gray-300/80 h-12 rounded-full pl-6 gap-2">
-          <input
-            type="text"
-            name="mobile"
-            placeholder="Mobile Number"
-            className="border-none outline-none ring-0 w-full"
-            value={formData.mobile}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        {state === "register" && (
+          <div className="flex items-center mt-4 w-full bg-white border border-gray-300/80 h-12 rounded-full pl-6 gap-2">
+            <input
+              type="text"
+              name="mobile"
+              placeholder="Mobile Number"
+              className="border-none outline-none ring-0 w-full"
+              value={formData.mobile}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        )}
 
         {/* Forgot Password */}
         {state === "login" && (

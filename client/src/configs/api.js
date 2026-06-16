@@ -1,10 +1,15 @@
-import axios from 'axios'
+import axios from "axios";
 
-console.log("BASE URL:", import.meta.env.VITE_BASE_URL);
+const baseURL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:3000"
+    : import.meta.env.VITE_BASE_URL ||
+      "https://resume-builder-2-5j1d.onrender.com";
 
+console.log("BASE URL:", baseURL);
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_BASE_URL
-})
+  baseURL,
+});
 
-export default api
+export default api;
